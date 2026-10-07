@@ -310,7 +310,8 @@ df.drop(columns=["Marks_10"], inplace=True)
 
  `axis=0` means rows.
 
- 
+---
+
  ## 11\. Adding Rows
 
  A common way to add a row is with `loc`:
@@ -439,5 +440,340 @@ pip install openpyxl
 
 ---
 
+ ## 16\. Reading JSON
+
+ Pandas can also work with JSON data:
+
+```
+df = pd.read_json("data.json")
+```
+
+ Save as JSON:
+
+```
+df.to_json("output.json")
+```
 
 ---
+
+ ## 17\. Handling Duplicate Data
+
+ Find duplicate rows:
+
+```
+df.duplicated()
+```
+
+ Count duplicates:
+
+```
+df.duplicated().sum()
+```
+
+ Remove duplicates:
+
+```
+df.drop_duplicates()
+```
+
+---
+
+ ## 18\. Renaming Columns
+
+ Rename specific columns:
+
+```
+df.rename(
+    columns={
+        "Name": "Student_Name",
+        "Marks": "Score"
+    },
+    inplace=True
+)
+```
+
+---
+
+ ## 19\. Changing Data Types
+
+ Check data types:
+
+```
+df.dtypes
+```
+
+ Convert a column:
+
+```
+df["Age"] = df["Age"].astype(int)
+```
+
+ For safer conversion when data may contain invalid values:
+
+```
+df["Age"] = pd.to_numeric(df["Age"], errors="coerce")
+```
+
+---
+
+ ## 20\. Grouping Data
+
+ `groupby()` is useful for analyzing groups of data.
+
+ Example:
+
+```
+data = {
+    "Department": ["IT", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 45000, 55000]
+}
+
+df = pd.DataFrame(data)
+```
+
+ Calculate the average salary by department:
+
+```
+df.groupby("Department")["Salary"].mean()
+```
+
+ Calculate multiple statistics:
+
+```
+df.groupby("Department")["Salary"].agg(
+    ["mean", "min", "max"]
+)
+```
+
+---
+
+ ## 21\. Basic Aggregation Functions
+
+ Common aggregation functions include:
+
+```
+df["Marks"].mean()
+df["Marks"].sum()
+df["Marks"].min()
+df["Marks"].max()
+df["Marks"].median()
+df["Marks"].count()
+```
+
+---
+
+ ## 22\. Value Counts
+
+ `value_counts()` counts how frequently each value appears.
+
+```
+df["Department"].value_counts()
+```
+
+ This is useful for understanding categorical data.
+
+---
+
+ ## 23\. Applying Functions
+
+ Use `apply()` when you want to apply a function to values.
+
+```
+df["Marks"] = df["Marks"].apply(lambda x: x + 5)
+```
+
+ You can also define your own function:
+
+```
+def add_bonus(marks):
+    return marks + 5
+
+df["Marks"] = df["Marks"].apply(add_bonus)
+```
+
+---
+
+ ## 24\. Combining DataFrames
+
+ ### Concatenation
+
+```
+df1 = pd.DataFrame({
+    "Name": ["Alice", "Bob"]
+})
+
+df2 = pd.DataFrame({
+    "Name": ["Charlie", "David"]
+})
+
+result = pd.concat([df1, df2], ignore_index=True)
+```
+
+ ### Merging
+
+ `merge()` is similar to a SQL JOIN.
+
+```
+students = pd.DataFrame({
+    "Student_ID": [1, 2, 3],
+    "Name": ["Alice", "Bob", "Charlie"]
+})
+
+marks = pd.DataFrame({
+    "Student_ID": [1, 2, 3],
+    "Marks": [85, 90, 78]
+})
+
+result = pd.merge(
+    students,
+    marks,
+    on="Student_ID"
+)
+```
+
+---
+
+ ## 25\. Resetting and Setting Index
+
+ Set a column as the index:
+
+```
+df = df.set_index("Name")
+```
+
+ Reset the index:
+
+```
+df = df.reset_index()
+```
+
+---
+
+ ## 26\. Basic Data Analysis Workflow
+
+ A typical Pandas workflow looks like this:
+
+```
+import pandas as pd
+
+# 1. Read data
+df = pd.read_csv("data.csv")
+
+# 2. Inspect data
+print(df.head())
+print(df.info())
+print(df.describe())
+
+# 3. Check missing values
+print(df.isnull().sum())
+
+# 4. Remove duplicates
+df = df.drop_duplicates()
+
+# 5. Filter data
+filtered = df[df["Marks"] > 80]
+
+# 6. Sort data
+filtered = filtered.sort_values("Marks", ascending=False)
+
+# 7. Save results
+filtered.to_csv("filtered_data.csv", index=False)
+```
+
+---
+
+ ## 27\. Important Pandas Functions
+
+ | Function | Purpose |
+| --- | --- |
+| `pd.DataFrame()` | Create a DataFrame |
+| `pd.Series()` | Create a Series |
+| `pd.read_csv()` | Read CSV |
+| `pd.read_excel()` | Read Excel |
+| `pd.read_json()` | Read JSON |
+| `df.head()` | First rows |
+| `df.tail()` | Last rows |
+| `df.info()` | DataFrame information |
+| `df.describe()` | Statistical summary |
+| `df.shape` | Rows and columns |
+| `df.columns` | Column names |
+| `df.dtypes` | Data types |
+| `df.isnull()` | Find missing values |
+| `df.dropna()` | Remove missing values |
+| `df.fillna()` | Fill missing values |
+| `df.drop_duplicates()` | Remove duplicates |
+| `df.sort_values()` | Sort data |
+| `df.groupby()` | Group data |
+| `df.merge()` | Merge DataFrames |
+| `pd.concat()` | Combine DataFrames |
+| `df.to_csv()` | Save CSV |
+| `df.to_excel()` | Save Excel |
+| `df.to_json()` | Save JSON |
+
+---
+
+ ## 28\. Quick Example
+
+ Here is a small complete example:
+
+```
+import pandas as pd
+
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David"],
+    "Age": [20, 21, 19, 22],
+    "Marks": [85, 72, 91, 65]
+}
+
+df = pd.DataFrame(data)
+
+# Display data
+print(df)
+
+# Students with marks above 80
+high_scorers = df[df["Marks"] > 80]
+
+print(high_scorers)
+
+# Average marks
+average_marks = df["Marks"].mean()
+
+print("Average Marks:", average_marks)
+
+# Sort by marks
+df = df.sort_values("Marks", ascending=False)
+
+print(df)
+```
+
+---
+
+ ## 29\. Key Concepts to Learn Next
+
+ After learning these basics, the next useful Pandas topics are:
+
+ - Advanced indexing with `loc` and `iloc`
+- `groupby()` and advanced aggregation
+- `merge()`, `join()`, and `concat()`
+- Working with dates and times
+- String operations
+- Pivot tables
+- Data cleaning
+- Data transformation
+- Handling large datasets
+- Integration with NumPy
+- Data visualization with Matplotlib and Seaborn
+
+ ## Summary
+
+ Pandas is mainly used to:
+
+ 1. Load data.
+2. Inspect data.
+3. Clean data.
+4. Filter and transform data.
+5. Analyze data.
+6. Combine datasets.
+7. Export processed data.
+
+ The two most important Pandas objects to understand are **Series** and **DataFrame**. Once these are clear, functions such as `read_csv()`, `loc`, `iloc`, `groupby()`, `merge()`, `dropna()`, and `fillna()` form the foundation for practical data analysis with Pandas.
