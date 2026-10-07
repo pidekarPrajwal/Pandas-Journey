@@ -310,4 +310,134 @@ df.drop(columns=["Marks_10"], inplace=True)
 
  `axis=0` means rows.
 
+ 
+ ## 11\. Adding Rows
+
+ A common way to add a row is with `loc`:
+
+```
+df.loc[len(df)] = ["David", 22, 88]
+```
+
+ For larger applications, prefer combining DataFrames with `pd.concat()` rather than repeatedly adding rows.
+
+---
+
+ ## 12\. Handling Missing Values
+
+ Missing data is common in real-world datasets.
+
+ Example:
+
+```
+data = {
+    "Name": ["Alice", "Bob", "Charlie"],
+    "Age": [20, None, 19],
+    "Marks": [85, 90, None]
+}
+
+df = pd.DataFrame(data)
+```
+
+ ### Check for missing values
+
+```
+df.isnull()
+```
+
+ Count missing values:
+
+```
+df.isnull().sum()
+```
+
+ ### Remove missing values
+
+```
+df.dropna()
+```
+
+ ### Fill missing values
+
+```
+df["Age"] = df["Age"].fillna(0)
+```
+
+ You can also fill with the mean:
+
+```
+df["Marks"] = df["Marks"].fillna(df["Marks"].mean())
+```
+
+---
+
+ ## 13\. Sorting Data
+
+ Sort by one column:
+
+```
+df.sort_values("Marks")
+```
+
+ Descending order:
+
+```
+df.sort_values("Marks", ascending=False)
+```
+
+ Sort by multiple columns:
+
+```
+df.sort_values(["Age", "Marks"])
+```
+
+---
+
+ ## 14\. Reading Data from CSV
+
+ CSV files are one of the most common data sources.
+
+```
+df = pd.read_csv("data.csv")
+```
+
+ View the data:
+
+```
+print(df.head())
+```
+
+ ### Save DataFrame to CSV
+
+```
+df.to_csv("output.csv", index=False)
+```
+
+ `index=False` prevents Pandas from writing the DataFrame index as an extra column.
+
+---
+
+ ## 15\. Reading Excel Files
+
+ Read an Excel file:
+
+```
+df = pd.read_excel("data.xlsx")
+```
+
+ Write to Excel:
+
+```
+df.to_excel("output.xlsx", index=False)
+```
+
+ You may need an additional Excel engine such as `openpyxl`:
+
+```
+pip install openpyxl
+```
+
+---
+
+
 ---
