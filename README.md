@@ -1,4 +1,4 @@
-Sure — here’s a ready-to-use Markdown file for the repo, covering the **basic knowledge of Pandas**.
+
 
  Pandas Basics
 
