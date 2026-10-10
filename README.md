@@ -1,7 +1,3 @@
-
-
- Pandas Basics
-
 # Pandas Basics
 
  Pandas is a popular Python library used for **data analysis and data manipulation**. It provides easy-to-use data structures and functions for working with structured data such as CSV files, Excel sheets, databases, and JSON data.
